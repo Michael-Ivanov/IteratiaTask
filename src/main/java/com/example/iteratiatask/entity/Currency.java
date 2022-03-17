@@ -104,12 +104,12 @@ public class Currency {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Currency currency = (Currency) o;
-        return Objects.equals(id, currency.id) && Objects.equals(date, currency.date) && Objects.equals(numCode, currency.numCode) && Objects.equals(charCode, currency.charCode) && Objects.equals(nominal, currency.nominal) && Objects.equals(name, currency.name) && Objects.equals(value, currency.value);
+        return Objects.equals(id, currency.id) && Objects.equals(numCode, currency.numCode) && Objects.equals(charCode, currency.charCode) && Objects.equals(nominal, currency.nominal) && Objects.equals(name, currency.name) && Objects.equals(value, currency.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, date, numCode, charCode, nominal, name, value);
+        return Objects.hash(id, numCode, charCode, nominal, name, value);
     }
 
     @Override
