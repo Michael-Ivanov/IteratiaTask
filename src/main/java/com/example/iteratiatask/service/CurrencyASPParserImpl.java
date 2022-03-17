@@ -41,8 +41,11 @@ public class CurrencyASPParserImpl implements CurrencyASPParser {
             // get all currencies records
             NodeList nodes = document.getElementsByTagName("Valute");
             for (int i = 0; i < nodes.getLength(); i++) {
-                NodeList childNodes = nodes.item(i).getChildNodes();
+                // get ID for each currency
+                Node valuteNode = nodes.item(i);
+                String ID = valuteNode.getAttributes().getNamedItem("ID").getNodeValue();
 
+                NodeList childNodes = nodes.item(i).getChildNodes();
                 // create map to pass nodes key-values
                 Map<String, String> map = new HashMap<>();
                 for (int j = 0; j < childNodes.getLength(); j++) {
@@ -51,6 +54,7 @@ public class CurrencyASPParserImpl implements CurrencyASPParser {
                 }
                 // create new Currency object, init with map values
                 Currency currency = new Currency(
+                        ID,
                         date,
                         Integer.parseInt(map.get("NumCode")),
                         map.get("CharCode"),

@@ -10,8 +10,7 @@ public class Currency {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(name = "date")
     private String date;
@@ -34,7 +33,8 @@ public class Currency {
     public Currency() {
     }
 
-    public Currency(String date, Integer numCode, String charCode, Integer nominal, String name, Double value) {
+    public Currency(String id, String date, Integer numCode, String charCode, Integer nominal, String name, Double value) {
+        this.id = id;
         this.date = date;
         this.numCode = numCode;
         this.charCode = charCode;
@@ -43,11 +43,11 @@ public class Currency {
         this.value = value;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -104,18 +104,18 @@ public class Currency {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Currency currency = (Currency) o;
-        return Objects.equals(date, currency.date) && Objects.equals(numCode, currency.numCode) && Objects.equals(charCode, currency.charCode) && Objects.equals(nominal, currency.nominal) && Objects.equals(name, currency.name) && Objects.equals(value, currency.value);
+        return Objects.equals(id, currency.id) && Objects.equals(date, currency.date) && Objects.equals(numCode, currency.numCode) && Objects.equals(charCode, currency.charCode) && Objects.equals(nominal, currency.nominal) && Objects.equals(name, currency.name) && Objects.equals(value, currency.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(date, numCode, charCode, nominal, name, value);
+        return Objects.hash(id, date, numCode, charCode, nominal, name, value);
     }
 
     @Override
     public String toString() {
         return "Currency{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", date='" + date + '\'' +
                 ", numCode=" + numCode +
                 ", charCode='" + charCode + '\'' +
