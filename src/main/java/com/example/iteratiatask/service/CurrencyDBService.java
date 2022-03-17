@@ -3,6 +3,7 @@ package com.example.iteratiatask.service;
 import com.example.iteratiatask.entity.Currency;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CurrencyDBService {
 
@@ -14,4 +15,5 @@ public interface CurrencyDBService {
 
     void delete(Currency currency);
 
+    Optional<Currency> getById(String id);
 }
