@@ -25,9 +25,10 @@ h1, h2 {
 .execute_button {
     margin-top: 20px;
     height: 38px;
-    width: 100px;
+    width: 120px;
     border-radius: 5px;
     border-color: #8d8e91;
+    font-family: Calibri, serif;
 }
 
 .gray_panel {
