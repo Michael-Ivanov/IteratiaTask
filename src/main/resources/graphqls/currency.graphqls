@@ -1,0 +1,14 @@
+type Currency {
+    id: ID!,
+    date: String,
+    numCode: Int,
+    charCode: String,
+    nominal: Int,
+    name: String,
+    value: Float
+}
+
+type Query {
+    currencies: [Currency]
+    currency(id: ID): Currency
+}
