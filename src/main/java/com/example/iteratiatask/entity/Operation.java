@@ -42,6 +42,15 @@ public class Operation {
         this.sumToExchange = sumToExchange;
     }
 
+    public Operation(Currency currency1, Currency currency2, Double sumToExchange) {
+        this.date = currency1.getDate();
+        this.charCode1 = currency1.getCharCode();
+        this.charCode2 = currency2.getCharCode();
+        this.exchangeRate = (currency1.getValue() / currency1.getNominal()) / (currency2.getValue() / currency2.getNominal());
+        this.sumToExchange = sumToExchange;
+        this.resultSum = exchangeRate * sumToExchange;
+    }
+
     public Long getId() {
         return id;
     }
