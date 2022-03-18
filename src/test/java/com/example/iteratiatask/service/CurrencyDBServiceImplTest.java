@@ -31,4 +31,19 @@ class CurrencyDBServiceImplTest {
                 .orElseThrow(() -> new RuntimeException("Unable to get Currency by id " + id));
         assertEquals("NOK", currency.getCharCode());
     }
+
+    @Test
+    public void shouldSeeEqualsTwoCurrencies() {
+        Currency currency1 = currencyService.getByCharCode("USD").orElseThrow();
+        Currency currency2 = new Currency(
+                currency1.getId(),
+                "22.02.22",
+                currency1.getNumCode(),
+                currency1.getCharCode(),
+                currency1.getNominal(),
+                currency1.getName(),
+                4.78
+        );
+        assertEquals(currency1, currency2);
+    }
 }
