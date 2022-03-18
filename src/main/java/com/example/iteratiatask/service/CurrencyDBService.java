@@ -16,4 +16,8 @@ public interface CurrencyDBService {
     void delete(Currency currency);
 
     Optional<Currency> getById(String id);
+
+    Optional<Currency> getByCharCode(String charCode);
+
+
 }

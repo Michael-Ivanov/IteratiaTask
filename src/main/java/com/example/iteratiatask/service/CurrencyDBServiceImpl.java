@@ -41,7 +41,7 @@ public class CurrencyDBServiceImpl implements CurrencyDBService {
 
     @Override
     public void save(Currency currency) {
-
+        repository.save(currency);
     }
 
     @Override
@@ -51,11 +51,16 @@ public class CurrencyDBServiceImpl implements CurrencyDBService {
 
     @Override
     public void delete(Currency currency) {
-
+        repository.delete(currency);
     }
 
     @Override
     public Optional<Currency> getById(String id) {
         return repository.findById(id);
+    }
+
+    @Override
+    public Optional<Currency> getByCharCode(String charCode) {
+        return repository.findByCharCode(charCode);
     }
 }
