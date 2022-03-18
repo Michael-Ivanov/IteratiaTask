@@ -32,10 +32,8 @@ public class OperationQueryResolver implements GraphQLQueryResolver {
     }
 
     public Operation getOperation(String charCode1, String charCode2, Double sum) {
-        System.out.println("ops resolver enter: " + charCode1 + " " + charCode2);
         Currency currency1 = currencyDBService.getByCharCode(charCode1).orElseThrow();
         Currency currency2 = currencyDBService.getByCharCode(charCode2).orElseThrow();
-
-        return new Operation(currency1, currency2, sum);
+        return operationDBService.save(new Operation(currency1, currency2, sum));
     }
 }
