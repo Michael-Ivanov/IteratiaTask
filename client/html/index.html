@@ -1,0 +1,27 @@
+<html lang="en">
+    <head>
+        <title>Конвертер валют</title>
+        <meta charset="utf-8">
+        <script src="../js/buttonscript.js"></script>
+        <script src="../js/currencyscript.js" defer></script>
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <h1>Конвертер валют</h1>
+        <h2>Конвертация по курсу на <span id="date"></span></h2>
+
+        <div class="gray_panel">
+            <input id="sum_input" type="text" class="sum_input">
+            <select id="select1" name="select1" class="select_cur"></select>
+            <img class="icons" src="../img/arrow.png">
+            <select id="select2" name="select2" class="select_cur"></select>
+            <img class="icons" src="../img/equals.png">
+            <input id="sum_output" type="text" readonly class="sum_input">
+            <div>
+                <input type="button" id="convertButton" value="Convert" onclick="buttonFunction()" class="execute_button"/>
+            </div>
+            <p id="result_field"></p>
+        </div>
+
+    </body>
+</html>
