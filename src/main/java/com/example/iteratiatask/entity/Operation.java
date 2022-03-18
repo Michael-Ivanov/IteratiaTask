@@ -16,27 +16,28 @@ public class Operation {
     private String date;
 
     @Column(name = "currency_from")
-    private String code1;
+    private String charCode1;
 
     @Column(name = "currency_to")
-    private String code2;
+    private String charCode2;
 
     @Column(name = "exchange_rate")
     private Double exchangeRate;
 
     @Column(name = "sum_to_exchange")
-    private Integer sumToExchange;
+    private Double sumToExchange;
 
     @Column(name = "result_sum")
     private Double resultSum;
 
+
     public Operation() {
     }
 
-    public Operation(String date, String code1, String code2, Double exchangeRate, Integer sumToExchange) {
+    public Operation(String date, String charCode1, String charCode2, Double exchangeRate, Double sumToExchange) {
         this.date = date;
-        this.code1 = code1;
-        this.code2 = code2;
+        this.charCode1 = charCode1;
+        this.charCode2 = charCode2;
         this.exchangeRate = exchangeRate;
         this.sumToExchange = sumToExchange;
     }
@@ -57,20 +58,20 @@ public class Operation {
         this.date = date;
     }
 
-    public String getCode1() {
-        return code1;
+    public String getCharCode1() {
+        return charCode1;
     }
 
-    public void setCode1(String code1) {
-        this.code1 = code1;
+    public void setCharCode1(String code1) {
+        this.charCode1 = code1;
     }
 
-    public String getCode2() {
-        return code2;
+    public String getCharCode2() {
+        return charCode2;
     }
 
-    public void setCode2(String code2) {
-        this.code2 = code2;
+    public void setCharCode2(String code2) {
+        this.charCode2 = code2;
     }
 
     public Double getExchangeRate() {
@@ -81,11 +82,11 @@ public class Operation {
         this.exchangeRate = exchangeRate;
     }
 
-    public Integer getSumToExchange() {
+    public Double getSumToExchange() {
         return sumToExchange;
     }
 
-    public void setSumToExchange(Integer sumToExchange) {
+    public void setSumToExchange(Double sumToExchange) {
         this.sumToExchange = sumToExchange;
     }
 
@@ -102,12 +103,12 @@ public class Operation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Operation operation = (Operation) o;
-        return Objects.equals(id, operation.id) && Objects.equals(date, operation.date) && Objects.equals(code1, operation.code1) && Objects.equals(code2, operation.code2) && Objects.equals(exchangeRate, operation.exchangeRate) && Objects.equals(sumToExchange, operation.sumToExchange) && Objects.equals(resultSum, operation.resultSum);
+        return Objects.equals(id, operation.id) && Objects.equals(date, operation.date) && Objects.equals(charCode1, operation.charCode1) && Objects.equals(charCode2, operation.charCode2) && Objects.equals(exchangeRate, operation.exchangeRate) && Objects.equals(sumToExchange, operation.sumToExchange) && Objects.equals(resultSum, operation.resultSum);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, date, code1, code2, exchangeRate, sumToExchange, resultSum);
+        return Objects.hash(id, date, charCode1, charCode2, exchangeRate, sumToExchange, resultSum);
     }
 
     @Override
@@ -115,8 +116,8 @@ public class Operation {
         return "Operation{" +
                 "id=" + id +
                 ", date='" + date + '\'' +
-                ", code1='" + code1 + '\'' +
-                ", code2='" + code2 + '\'' +
+                ", code1='" + charCode1 + '\'' +
+                ", code2='" + charCode2 + '\'' +
                 ", exchangeRate=" + exchangeRate +
                 ", sumToExchange=" + sumToExchange +
                 ", resultSum=" + resultSum +

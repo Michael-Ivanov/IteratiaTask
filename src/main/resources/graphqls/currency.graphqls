@@ -8,7 +8,20 @@ type Currency {
     value: Float
 }
 
+type Operation {
+    id: ID!
+    date: String,
+    charCode1: String,
+    charCode2: String,
+    exchangeRate: Float,
+    sumToExchange: Float,
+    resultSum: Float
+}
+
 type Query {
     currencies: [Currency]
     currency(id: ID): Currency
+
+    operations: [Operation]
+    operation(id: ID): Operation
 }
