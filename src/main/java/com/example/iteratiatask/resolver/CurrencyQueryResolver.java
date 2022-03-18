@@ -23,7 +23,7 @@ public class CurrencyQueryResolver implements GraphQLQueryResolver {
         return dbService.getAll();
     }
 
-    public Optional<Currency> getCurrency(String id) {
-        return dbService.getById(id);
+    public Optional<Currency> getCurrency(String charCode) {
+        return dbService.getByCharCode(charCode);
     }
 }

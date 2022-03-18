@@ -20,8 +20,9 @@ type Operation {
 
 type Query {
     currencies: [Currency]
-    currency(id: ID): Currency
+    currency(charCode: String): Currency
 
     operations: [Operation]
     operation(id: ID): Operation
+    operation(charCode1: String, charCode2: String, sum: Float): Operation
 }

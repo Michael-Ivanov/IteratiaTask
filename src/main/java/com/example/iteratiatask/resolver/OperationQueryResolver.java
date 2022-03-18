@@ -1,7 +1,9 @@
 package com.example.iteratiatask.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
+import com.example.iteratiatask.entity.Currency;
 import com.example.iteratiatask.entity.Operation;
+import com.example.iteratiatask.service.CurrencyDBService;
 import com.example.iteratiatask.service.OperationDBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,18 +14,28 @@ import java.util.Optional;
 @Component
 public class OperationQueryResolver implements GraphQLQueryResolver {
 
-    private OperationDBService dbService;
+    private OperationDBService operationDBService;
+    private CurrencyDBService currencyDBService;
 
     @Autowired
-    public OperationQueryResolver(OperationDBService dbService) {
-        this.dbService = dbService;
+    public OperationQueryResolver(OperationDBService operationDBService, CurrencyDBService currencyDBService) {
+        this.operationDBService = operationDBService;
+        this.currencyDBService = currencyDBService;
     }
 
     public List<Operation> getOperations() {
-        return dbService.getAll();
+        return operationDBService.getAll();
     }
 
     public Optional<Operation> getOperation(Long id) {
-        return dbService.getById(id);
+        return operationDBService.getById(id);
+    }
+
+    public Operation getOperation(String charCode1, String charCode2, Double sum) {
+        System.out.println("ops resolver enter: " + charCode1 + " " + charCode2);
+        Currency currency1 = currencyDBService.getByCharCode(charCode1).orElseThrow();
+        Currency currency2 = currencyDBService.getByCharCode(charCode2).orElseThrow();
+
+        return new Operation(currency1, currency2, sum);
     }
 }
