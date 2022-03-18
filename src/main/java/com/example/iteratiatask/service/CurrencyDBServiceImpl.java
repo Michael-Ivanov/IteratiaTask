@@ -40,8 +40,8 @@ public class CurrencyDBServiceImpl implements CurrencyDBService {
     }
 
     @Override
-    public void save(Currency currency) {
-        repository.save(currency);
+    public Currency save(Currency currency) {
+        return repository.save(currency);
     }
 
     @Override

@@ -9,7 +9,7 @@ public interface CurrencyDBService {
 
     List<Currency> getAll();
 
-    void save(Currency currency);
+    Currency save(Currency currency);
 
     void saveAll(List<Currency> currencies);
 

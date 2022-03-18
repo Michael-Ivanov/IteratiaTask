@@ -29,7 +29,7 @@ public class OperationDBServiceImpl implements OperationDBService {
     }
 
     @Override
-    public void save(Operation operation) {
-        repository.save(operation);
+    public Operation save(Operation operation) {
+        return repository.save(operation);
     }
 }

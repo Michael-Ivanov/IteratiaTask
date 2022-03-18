@@ -11,5 +11,5 @@ public interface OperationDBService {
 
     Optional<Operation> getById(Long id);
 
-    void save(Operation operation);
+    Operation save(Operation operation);
 }
