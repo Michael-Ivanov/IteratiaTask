@@ -6,5 +6,9 @@ import java.util.List;
 
 public interface CurrencyASPParser {
 
-    List<Currency> parseAll();
+    List<Currency> getAll();
+
+    String getDate();
+
+    Currency getByCharCode(String charCode);
 }

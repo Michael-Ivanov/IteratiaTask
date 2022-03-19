@@ -21,54 +21,64 @@ import java.util.Map;
 @Service
 public class CurrencyASPParserImpl implements CurrencyASPParser {
 
-    @Value("${app.cb-page.url}")
-    private String address;
+    private final Document document;
+
+    public CurrencyASPParserImpl(@Value("${app.cb-page.url}") String address) throws IOException, ParserConfigurationException, SAXException {
+        // create DOM document from url
+        URL url = new URL(address);
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        document = db.parse(url.openStream());
+    }
 
     @Override
-    public List<Currency> parseAll() {
-        try {
-            // create DOM document from url
-            URL url = new URL(address);
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document document = db.parse(url.openStream());
+    public List<Currency> getAll() {
+        String date = getDate();
+        List<Currency> resultList = new ArrayList<>();
+        // get all currencies records
+        NodeList nodes = document.getElementsByTagName("Valute");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            // get ID for each currency
+            Node valuteNode = nodes.item(i);
+            String ID = valuteNode.getAttributes().getNamedItem("ID").getNodeValue();
 
-            // get root element and retrieve date value
-            Node valCursNode = document.getElementsByTagName("ValCurs").item(0);
-            String date = valCursNode.getAttributes().getNamedItem("Date").getNodeValue();
-
-            List<Currency> resultList = new ArrayList<>();
-            // get all currencies records
-            NodeList nodes = document.getElementsByTagName("Valute");
-            for (int i = 0; i < nodes.getLength(); i++) {
-                // get ID for each currency
-                Node valuteNode = nodes.item(i);
-                String ID = valuteNode.getAttributes().getNamedItem("ID").getNodeValue();
-
-                NodeList childNodes = nodes.item(i).getChildNodes();
-                // create map to pass nodes key-values
-                Map<String, String> map = new HashMap<>();
-                for (int j = 0; j < childNodes.getLength(); j++) {
-                    Node node = childNodes.item(j);
-                    map.put(node.getNodeName(), node.getTextContent());
-                }
-                // create new Currency object, init with map values
-                Currency currency = new Currency(
-                        ID,
-                        date,
-                        Integer.parseInt(map.get("NumCode")),
-                        map.get("CharCode"),
-                        Integer.parseInt(map.get("Nominal")),
-                        map.get("Name"),
-                        Double.parseDouble(map.get("Value").replace(",", "."))
-                );
-                // add new Currency to list, repeat...
-                resultList.add(currency);
+            NodeList childNodes = nodes.item(i).getChildNodes();
+            // create map to pass nodes key-values
+            Map<String, String> map = new HashMap<>();
+            for (int j = 0; j < childNodes.getLength(); j++) {
+                Node node = childNodes.item(j);
+                map.put(node.getNodeName(), node.getTextContent());
             }
-            return resultList;
-        } catch (IOException | SAXException | ParserConfigurationException e) {
-            // todo: refactor each exception
-            throw new RuntimeException("Unable to parse document: " + e.getMessage());
+            // create new Currency object, init with map values
+            Currency currency = new Currency(
+                    ID,
+                    date,
+                    Integer.parseInt(map.get("NumCode")),
+                    map.get("CharCode"),
+                    Integer.parseInt(map.get("Nominal")),
+                    map.get("Name"),
+                    Double.parseDouble(map.get("Value").replace(",", "."))
+            );
+            // add new Currency to list, repeat...
+            resultList.add(currency);
         }
+        return resultList;
+    }
+
+    @Override
+    public Currency getByCharCode(String charCode) {
+        // get list of elements, return one with the charCode
+        List<Currency> currencies = getAll();
+        return currencies.stream()
+                .filter(e -> e.getCharCode().equals(charCode))
+                .findFirst()
+                .orElseThrow();
+
+    }
+
+    public String getDate() {
+        // get root element and retrieve date value
+        Node valCursNode = document.getElementsByTagName("ValCurs").item(0);
+        return valCursNode.getAttributes().getNamedItem("Date").getNodeValue();
     }
 }
