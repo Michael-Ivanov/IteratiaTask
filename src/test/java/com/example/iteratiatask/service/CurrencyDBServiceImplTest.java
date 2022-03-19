@@ -1,15 +1,14 @@
 package com.example.iteratiatask.service;
 
 import com.example.iteratiatask.entity.Currency;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CurrencyDBServiceImplTest {
@@ -27,14 +26,13 @@ class CurrencyDBServiceImplTest {
     public void shouldGetCurrencyById() {
         String id = "R01535";
         Currency currency = currencyService
-                .getById(id)   // NOK Норвежская крона
-                .orElseThrow(() -> new RuntimeException("Unable to get Currency by id " + id));
+                .getById(id);  // NOK Норвежская крона
         assertEquals("NOK", currency.getCharCode());
     }
 
     @Test
     public void shouldSeeEqualsTwoCurrencies() {
-        Currency currency1 = currencyService.getByCharCode("USD").orElseThrow();
+        Currency currency1 = currencyService.getByCharCode("USD");
         Currency currency2 = new Currency(
                 currency1.getId(),
                 "22.02.22",

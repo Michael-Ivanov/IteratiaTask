@@ -10,17 +10,16 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CurrencyASPParserImplTest {
 
     @Autowired
     private CurrencyASPParser parser;
 
-
     @Test
     // simple test to check if parser works and returns list
     public void shouldParseUrlDocument() {
-        List<Currency> list = parser.parseAll();
+        List<Currency> list = parser.getAll();
         assertFalse(list.isEmpty());
         assertNotNull(list.get(new Random().nextInt(list.size() - 1)));
         System.out.println(list);

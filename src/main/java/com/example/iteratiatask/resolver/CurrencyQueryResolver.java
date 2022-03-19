@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class CurrencyQueryResolver implements GraphQLQueryResolver {
@@ -23,7 +22,7 @@ public class CurrencyQueryResolver implements GraphQLQueryResolver {
         return dbService.getAll();
     }
 
-    public Optional<Currency> getCurrency(String charCode) {
+    public Currency getCurrency(String charCode) {
         return dbService.getByCharCode(charCode);
     }
 }
