@@ -3,13 +3,13 @@ function buttonFunction() {
     let val1 = document.getElementById("select1").value;
     let val2 = document.getElementById("select2").value;
     let sum = document.getElementById("sum_input").value;
-    operateByCharCodes(val1, val2, parseFloat(sum));
+    operateByCharCodes(val1, val2, sum);
 
     // get operation object and its result sum
     function operateByCharCodes(charCode1, charCode2, sum) {
 
         // introduce graphql query
-        let query = `query getResultOps($charCode1: String, $charCode2: String, $sum: Float) {
+        let query = `query getResultOps($charCode1: String, $charCode2: String, $sum: String) {
                                 operation(charCode1: $charCode1, charCode2: $charCode2, sum: $sum) {
                                          id,
                                          date,
