@@ -5,7 +5,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.text.DecimalFormat;
-import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @NoArgsConstructor
@@ -36,13 +37,19 @@ public class Operation {
     @Column(name = "result_sum")
     private Double resultSum;
 
-    public Operation(Currency currency1, Currency currency2, String sumToExchange) {
-        this.date = currency1.getDate();
+    public Operation(Currency currency1, Currency currency2, double sumToExchange) {
+        this.date = setCurrentDate();
         this.charCode1 = currency1.getCharCode();
         this.charCode2 = currency2.getCharCode();
         this.exchangeRate = (currency1.getValue() / currency1.getNominal()) / (currency2.getValue() / currency2.getNominal());
-        this.sumToExchange = Double.parseDouble(sumToExchange);
+        this.sumToExchange = sumToExchange;
         this.resultSum = roundSum(exchangeRate * this.sumToExchange);
+    }
+
+    private String setCurrentDate() {
+        LocalDate date = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        return formatter.format(date);
     }
 
     private double roundSum(double sum) {
