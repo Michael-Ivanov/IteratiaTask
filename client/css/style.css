@@ -30,11 +30,18 @@ h1, h2 {
     border-color: #8d8e91;
     font-family: Calibri, serif;
 }
+.gray_panel, .stats-panel {
+    padding: 50px;
+    width: 800px;
+}
 
 .gray_panel {
-    padding: 50px;
     background: #eff1f5;
-    display: inline-block;
+}
+
+.stats-panel {
+    padding-top: 20px;
+    background: #e7f5da;
 }
 
 .icons {
