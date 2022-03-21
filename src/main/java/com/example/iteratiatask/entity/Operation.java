@@ -41,7 +41,7 @@ public class Operation {
         this.date = setCurrentDate();
         this.charCode1 = currency1.getCharCode();
         this.charCode2 = currency2.getCharCode();
-        this.exchangeRate = (currency1.getValue() / currency1.getNominal()) / (currency2.getValue() / currency2.getNominal());
+        this.exchangeRate = calculateExchangeRate(currency1, currency2);
         this.sumToExchange = sumToExchange;
         this.resultSum = roundSum(exchangeRate * this.sumToExchange);
     }
@@ -50,6 +50,11 @@ public class Operation {
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         return formatter.format(date);
+    }
+
+    private double calculateExchangeRate(Currency currency1, Currency currency2) {
+        return (currency1.getLastRate().getValue() / currency1.getNominal()) /
+                (currency2.getLastRate().getValue() / currency2.getNominal());
     }
 
     private double roundSum(double sum) {
