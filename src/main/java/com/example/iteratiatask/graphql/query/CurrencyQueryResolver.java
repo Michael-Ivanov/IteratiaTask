@@ -1,4 +1,4 @@
-package com.example.iteratiatask.resolver;
+package com.example.iteratiatask.graphql.query;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.example.iteratiatask.entity.Currency;

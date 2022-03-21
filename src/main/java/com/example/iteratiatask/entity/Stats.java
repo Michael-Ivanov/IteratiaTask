@@ -23,7 +23,7 @@ public class Stats {
         return operations.stream()
                 .mapToDouble(Operation::getExchangeRate)
                 .average()
-                .orElseThrow();
+                .orElse(0);
     }
 
     private Double calculateSumValue(List<Operation> operations) {

@@ -9,8 +9,8 @@ function buttonFunction() {
     function operateByCharCodes(charCode1, charCode2, sum) {
 
         // introduce graphql query
-        let query = `query getResultOps($charCode1: String, $charCode2: String, $sum: String) {
-                                operation(charCode1: $charCode1, charCode2: $charCode2, sum: $sum) {
+        let query = `mutation createOperation($charCode1: String, $charCode2: String, $sum: String) {
+                                createOperation(charCode1: $charCode1, charCode2: $charCode2, sum: $sum) {
                                          id,
                                          date,
                                          charCode1,
@@ -35,7 +35,7 @@ function buttonFunction() {
             .then((res) => res.json())
             .then((result) => {
                 // set resultSum value to 'sum_output' input
-                document.getElementById("sum_output").value = result.data.operation.resultSum;
+                document.getElementById("sum_output").value = result.data.createOperation.resultSum;
             });
         // todo: handle error
     }

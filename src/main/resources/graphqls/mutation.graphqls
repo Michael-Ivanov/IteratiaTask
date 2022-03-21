@@ -1,0 +1,3 @@
+type Mutation {
+    createOperation(charCode1: String, charCode2: String, sum: String) : Operation
+}
