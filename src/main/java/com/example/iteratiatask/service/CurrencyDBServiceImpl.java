@@ -1,11 +1,13 @@
 package com.example.iteratiatask.service;
 
 import com.example.iteratiatask.entity.Currency;
+import com.example.iteratiatask.entity.ExchangeRate;
 import com.example.iteratiatask.repository.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,24 +18,30 @@ public class CurrencyDBServiceImpl implements CurrencyDBService {
     private final CurrencyRepository repository;
     private final CurrencyASPParser parser;
 
-    private List<Currency> dailyList;
 
     @Autowired
     public CurrencyDBServiceImpl(CurrencyRepository repository, CurrencyASPParser parser) {
         this.repository = repository;
         this.parser = parser;
-        dailyList = parser.getAll();
     }
 
     @PostConstruct
-    // initial fill 'currencies' table
+    // initial fill 'currencies' and 'exchange_rates' tables
     private void init() {
         List<Currency> list = getAll();
+        for (Currency currency : list) {
+            System.out.println("Currency: " + currency);
+        }
         // get list of currencies not present in db
         List<Currency> notPersisted =
-                dailyList.stream()
-                .filter(currency -> !list.contains(currency))
-                .collect(Collectors.toList());
+                parser.getAll().stream()
+                        .filter(currency -> !list.contains(currency))
+                        .collect(Collectors.toList());
+        // fetch exchange rate from bank page for each element, add
+        notPersisted.forEach(elem -> {
+            ExchangeRate rate = parser.getExchangeRateById(elem.getId());
+            elem.addExchangeRate(rate);
+        });
         // save list to db
         saveAll(notPersisted);
     }
@@ -41,6 +49,7 @@ public class CurrencyDBServiceImpl implements CurrencyDBService {
     @Override
     public List<Currency> getAll() {
         List<Currency> list = repository.findAll();
+        // sort list by Currency name
         list.sort(Comparator.comparing(Currency::getName));
         return list;
     }
@@ -67,10 +76,16 @@ public class CurrencyDBServiceImpl implements CurrencyDBService {
 
     @Override
     public Currency getByCharCode(String charCode) {
+        // find Currency in db
         Currency currency = repository.findByCharCode(charCode);
+        ExchangeRate lastRate = currency.getLastRate();
+        // get actual exchange date
         String actualExchangeDate = parser.getDate();
-        if (!currency.getDate().equals(actualExchangeDate)) {
-            currency = parser.getByCharCode(charCode);
+        // if there is no exchange rate for the actual date...
+        if (lastRate == null || !actualExchangeDate.equals(lastRate.getDate())) {
+            // fetch new exchange rate from bank page, add to currency, save and return
+            ExchangeRate newRate = parser.getExchangeRateById(currency.getId());
+            currency.addExchangeRate(newRate);
             return repository.save(currency);
         }
         return currency;
