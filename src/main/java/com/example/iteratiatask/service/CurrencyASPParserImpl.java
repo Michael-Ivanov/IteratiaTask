@@ -1,6 +1,7 @@
 package com.example.iteratiatask.service;
 
 import com.example.iteratiatask.entity.Currency;
+import com.example.iteratiatask.entity.ExchangeRate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -33,7 +34,6 @@ public class CurrencyASPParserImpl implements CurrencyASPParser {
 
     @Override
     public List<Currency> getAll() {
-        String date = getDate();
         List<Currency> resultList = new ArrayList<>();
         // get all currencies records
         NodeList nodes = document.getElementsByTagName("Valute");
@@ -41,28 +41,30 @@ public class CurrencyASPParserImpl implements CurrencyASPParser {
             // get ID for each currency
             Node valuteNode = nodes.item(i);
             String ID = valuteNode.getAttributes().getNamedItem("ID").getNodeValue();
-
-            NodeList childNodes = nodes.item(i).getChildNodes();
             // create map to pass nodes key-values
-            Map<String, String> map = new HashMap<>();
-            for (int j = 0; j < childNodes.getLength(); j++) {
-                Node node = childNodes.item(j);
-                map.put(node.getNodeName(), node.getTextContent());
-            }
+            NodeList childNodes = nodes.item(i).getChildNodes();
+            Map<String, String> map = getNodeValueMap(childNodes);
             // create new Currency object, init with map values
             Currency currency = new Currency(
                     ID,
-                    date,
                     Integer.parseInt(map.get("NumCode")),
                     map.get("CharCode"),
                     Integer.parseInt(map.get("Nominal")),
-                    map.get("Name"),
-                    Double.parseDouble(map.get("Value").replace(",", "."))
+                    map.get("Name")
             );
             // add new Currency to list, repeat...
             resultList.add(currency);
         }
         return resultList;
+    }
+
+    private Map<String, String> getNodeValueMap(NodeList list) {
+        Map<String, String> map = new HashMap<>();
+        for (int j = 0; j < list.getLength(); j++) {
+            Node node = list.item(j);
+            map.put(node.getNodeName(), node.getTextContent());
+        }
+        return map;
     }
 
     @Override
@@ -76,9 +78,32 @@ public class CurrencyASPParserImpl implements CurrencyASPParser {
 
     }
 
+    @Override
     public String getDate() {
         // get root element and retrieve date value
         Node valCursNode = document.getElementsByTagName("ValCurs").item(0);
         return valCursNode.getAttributes().getNamedItem("Date").getNodeValue();
     }
+
+    @Override
+    public ExchangeRate getExchangeRateById(String id) {
+        String date = getDate();
+        Map<String, String> map = new HashMap<>();
+        // get all 'Valute' nodes..
+        NodeList list = document.getElementsByTagName("Valute");
+        for (int i = 0; i < list.getLength(); i++) {
+            // find one with the ID
+            String idFound = list.item(i).getAttributes().getNamedItem("ID").getNodeValue();
+            if (id.equals(idFound)) {
+                NodeList childs = list.item(i).getChildNodes();
+                // store to map
+                map = getNodeValueMap(childs);
+            }
+        }
+        // construct and return new ExchangeRate
+        return new ExchangeRate(
+                date, Double.parseDouble(map.get("Value").replace(",", "."))
+        );
+    }
+
 }
