@@ -15,6 +15,7 @@ function populateSelectElement(id) {
     // create listener to clear 'sum_output' field when currency changed
     select.addEventListener('change', () => {
         document.getElementById('sum_output').value = '';
+        document.getElementById("stats_panel").hidden = true;
     })
 
     // fetch currencies list and populate 'select' with list elements

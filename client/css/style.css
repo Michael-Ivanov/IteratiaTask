@@ -1,8 +1,3 @@
-h1, h2 {
-    padding-left: 50px;
-    font-family: Calibri, serif;
-}
-
 .sum_input {
     width: 160px;
     height: 38px;
@@ -22,6 +17,10 @@ h1, h2 {
     font-family: Calibri, serif;
 }
 
+#statsButton {
+    margin-left: 20px;
+}
+
 .execute_button {
     margin-top: 20px;
     height: 38px;
@@ -30,16 +29,22 @@ h1, h2 {
     border-color: #8d8e91;
     font-family: Calibri, serif;
 }
-.gray_panel, .stats-panel {
+
+.gray_panel, .stats_panel, .header_panel {
     padding: 50px;
     width: 800px;
+}
+
+.header_panel {
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 .gray_panel {
     background: #eff1f5;
 }
 
-.stats-panel {
+.stats_panel {
     padding-top: 20px;
     background: #e7f5da;
 }
