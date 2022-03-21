@@ -36,7 +36,16 @@ function buttonFunction() {
             .then((result) => {
                 // set resultSum value to 'sum_output' input
                 document.getElementById("sum_output").value = result.data.createOperation.resultSum;
+            })
+            .catch((error) => {
+                console.log(error);
+                if (val1 === "NoValue" || val2 === "NoValue") {
+                    alert("Выберите валюту");
+                }
+
+                if (sum === "") {
+                    alert("Укажите сумму для конвертации");
+                }
             });
-        // todo: handle error
     }
 }

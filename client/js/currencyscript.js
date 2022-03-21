@@ -9,6 +9,7 @@ function populateSelectElement(id) {
     select.length = 0;
     let defaultOption = document.createElement('option');
     defaultOption.text = 'Выберите валюту';
+    defaultOption.value = 'NoValue';
     select.add(defaultOption);
     select.selectedIndex = 0;
 
@@ -34,7 +35,10 @@ function populateSelectElement(id) {
                 option.innerText = element.name;
                 select.append(option);
             });
-            // todo: handle error
+
+        })
+        .catch(error => {
+            console.log(error);
         });
 }
 // get current date. format and set date in header

@@ -77,7 +77,9 @@ public class CurrencyDBServiceImpl implements CurrencyDBService {
     @Override
     public Currency getByCharCode(String charCode) {
         // find Currency in db
-        Currency currency = repository.findByCharCode(charCode);
+        Currency currency = repository.findByCharCode(charCode)
+                .orElseThrow(() -> new RuntimeException("Error. Cannot find currency with charCode "
+                        + "'" + charCode + "'"));
         ExchangeRate lastRate = currency.getLastRate();
         // get actual exchange date
         String actualExchangeDate = parser.getDate();
