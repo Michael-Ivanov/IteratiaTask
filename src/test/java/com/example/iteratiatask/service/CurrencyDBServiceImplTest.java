@@ -35,12 +35,10 @@ class CurrencyDBServiceImplTest {
         Currency currency1 = currencyService.getByCharCode("USD");
         Currency currency2 = new Currency(
                 currency1.getId(),
-                "22.02.22",
                 currency1.getNumCode(),
                 currency1.getCharCode(),
                 currency1.getNominal(),
-                currency1.getName(),
-                4.78
+                currency1.getName()
         );
         assertEquals(currency1, currency2);
     }
