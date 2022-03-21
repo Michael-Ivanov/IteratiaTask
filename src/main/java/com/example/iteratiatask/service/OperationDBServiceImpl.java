@@ -5,7 +5,11 @@ import com.example.iteratiatask.repository.OperationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OperationDBServiceImpl implements OperationDBService {
@@ -23,8 +27,20 @@ public class OperationDBServiceImpl implements OperationDBService {
     }
 
     @Override
-    public List<Operation> getAllByCharCodes(String charCode1, String charCode2) {
-        return repository.getAllByCharCode1AndCharCode2(charCode1, charCode2);
+    public List<Operation> getWeekOperationsByCharCodes(String charCode1, String charCode2) {
+        // get all operations by pair of char codes
+        List<Operation> operations = repository.getAllByCharCode1AndCharCode2(charCode1, charCode2);
+        // set DateTimeFormatter to custom date format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        LocalDate dateNow = LocalDate.now();
+        // stream and filter only last week operations (inclusively), return result
+        return operations.stream()
+                .filter(operation -> {
+                    LocalDate opDate = LocalDate.parse(operation.getDate(), formatter);
+                    return opDate.isAfter(dateNow.minus(8, ChronoUnit.DAYS));
+                })
+                .collect(Collectors.toList());
+
     }
 
     @Override

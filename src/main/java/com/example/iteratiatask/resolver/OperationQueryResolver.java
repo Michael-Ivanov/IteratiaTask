@@ -38,7 +38,7 @@ public class OperationQueryResolver implements GraphQLQueryResolver {
     }
 
     public Stats getStats(String charCode1, String charCode2) {
-        List<Operation> operations = operationDBService.getAllByCharCodes(charCode1, charCode2);
+        List<Operation> operations = operationDBService.getWeekOperationsByCharCodes(charCode1, charCode2);
         Stats stats = new Stats(operations);
         System.out.println(stats);
         return stats;

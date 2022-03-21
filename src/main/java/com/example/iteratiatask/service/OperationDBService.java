@@ -8,7 +8,7 @@ public interface OperationDBService {
 
     List<Operation> getAll();
 
-    List<Operation> getAllByCharCodes(String charCode1, String charCode2);
+    List<Operation> getWeekOperationsByCharCodes(String charCode1, String charCode2);
 
     Operation getById(Long id);
 
