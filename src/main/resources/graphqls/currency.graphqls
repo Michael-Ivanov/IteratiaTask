@@ -1,11 +1,9 @@
 type Currency {
     id: ID!,
-    date: String,
     numCode: Int,
     charCode: String,
     nominal: Int,
-    name: String,
-    value: Float
+    name: String
 }
 
 type Operation {
