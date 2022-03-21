@@ -16,6 +16,11 @@ type Operation {
     resultSum: Float
 }
 
+type Stats {
+    avgRate: Float,
+    sumValue: Float
+}
+
 type Query {
     currencies: [Currency]
     currency(charCode: String): Currency
@@ -23,4 +28,6 @@ type Query {
     operations: [Operation]
     operation(id: ID): Operation
     operation(charCode1: String, charCode2: String, sum: String): Operation
+
+    stats(charCode1: String, charCode2: String): Stats
 }
