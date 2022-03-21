@@ -23,6 +23,11 @@ public class OperationDBServiceImpl implements OperationDBService {
     }
 
     @Override
+    public List<Operation> getAllByCharCodes(String charCode1, String charCode2) {
+        return repository.getAllByCharCode1AndCharCode2(charCode1, charCode2);
+    }
+
+    @Override
     public Operation getById(Long id) {
         return repository.findById(id).orElseThrow();
     }
