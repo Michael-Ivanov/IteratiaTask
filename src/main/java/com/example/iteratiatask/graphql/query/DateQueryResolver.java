@@ -2,8 +2,10 @@ package com.example.iteratiatask.graphql.query;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.example.iteratiatask.service.CurrencyASPParser;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class DateQueryResolver implements GraphQLQueryResolver {
 
@@ -14,6 +16,7 @@ public class DateQueryResolver implements GraphQLQueryResolver {
     }
 
     public String getDate() {
+        log.info("Getting bank exchange date");
         return parser.getDate();
     }
 }
