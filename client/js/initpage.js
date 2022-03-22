@@ -1,11 +1,15 @@
-populateSelectElement("select1");
-populateSelectElement("select2");
+
+getCurrencies().then(result => {
+        populateSelectElement("select1", result);
+        populateSelectElement("select2", result);
+    }
+);
 setHeaderDate();
 
-function populateSelectElement(id) {
+function populateSelectElement(id, result) {
     let select = document.getElementById(id);
 
-    // create and set initial option for 'select'
+    // create and set default option for 'select'
     select.length = 0;
     let defaultOption = document.createElement('option');
     defaultOption.text = 'Выберите валюту';
@@ -19,28 +23,32 @@ function populateSelectElement(id) {
         document.getElementById("stats_panel").hidden = true;
     })
 
-    // fetch currencies list and populate 'select' with list elements
-    fetch('http://localhost:8888/graphql', {
+    // for each currency element create option and append to select
+    result.data.currencies.forEach(element => {
+    let option = document.createElement('option');
+    option.value = element.charCode;
+    option.innerText = element.name;
+    select.append(option);
+    });
+}
+
+function getCurrencies() {
+    // fetch currencies list and return promise result
+    return fetch('http://localhost:8888/graphql', {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
             query: "{ currencies { charCode, name } }"
         }),
     })
-        .then((res) => res.json())
-        .then((result) => {
-            result.data.currencies.forEach(element => {
-                let option = document.createElement('option');
-                option.value = element.charCode;
-                option.innerText = element.name;
-                select.append(option);
-            });
-
+        .then((res) => {
+            return res.json()
         })
         .catch(error => {
             console.log(error);
         });
 }
+
 // get current date. format and set date in header
 function setHeaderDate() {
     let dateField = document.getElementById("date");
