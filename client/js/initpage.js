@@ -52,10 +52,22 @@ function getCurrencies() {
 // get current date. format and set date in header
 function setHeaderDate() {
     let dateField = document.getElementById("date");
-    let day = new Date(Date.now()).getDate().toString();
-    if (day < 10) day = "0" + day;
-    let month = new Date(Date.now()).getMonth().toString();
-    if (month < 10) month = "0" + month;
-    let year = new Date(Date.now()).getFullYear().toString();
-    dateField.innerText = day + "." + month + "." + year
+    fetch('http://localhost:8888/graphql', {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            query: `query getMyDate {
+                        date
+                    }`
+        }),
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            console.log(res.data.date)
+            dateField.innerText = res.data.date;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
 }

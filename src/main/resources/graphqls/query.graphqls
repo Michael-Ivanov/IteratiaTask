@@ -3,8 +3,8 @@ type Query {
     currency(charCode: String): Currency
 
     operations: [Operation]
-#    operation(id: ID): Operation
-#    operation(charCode1: String, charCode2: String, sum: String): Operation
 
     stats(charCode1: String, charCode2: String): Stats
+
+    date: String
 }
