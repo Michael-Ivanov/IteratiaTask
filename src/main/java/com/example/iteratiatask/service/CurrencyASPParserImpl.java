@@ -2,6 +2,7 @@ package com.example.iteratiatask.service;
 
 import com.example.iteratiatask.entity.Currency;
 import com.example.iteratiatask.entity.ExchangeRate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -19,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class CurrencyASPParserImpl implements CurrencyASPParser {
 
@@ -34,6 +36,7 @@ public class CurrencyASPParserImpl implements CurrencyASPParser {
 
     @Override
     public List<Currency> getAll() {
+        log.info("Getting all currencies from bank page");
         List<Currency> resultList = new ArrayList<>();
         // get all currencies records
         NodeList nodes = document.getElementsByTagName("Valute");
@@ -69,6 +72,7 @@ public class CurrencyASPParserImpl implements CurrencyASPParser {
 
     @Override
     public Currency getByCharCode(String charCode) {
+        log.info("Getting currency by charCode {}", charCode);
         // get list of elements, return one with the charCode
         List<Currency> currencies = getAll();
         return currencies.stream()
@@ -87,6 +91,7 @@ public class CurrencyASPParserImpl implements CurrencyASPParser {
 
     @Override
     public ExchangeRate getExchangeRateById(String id) {
+        log.info("Getting exchange rate by id {}", id);
         String date = getDate();
         Map<String, String> map = new HashMap<>();
         // get all 'Valute' nodes..
