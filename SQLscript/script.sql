@@ -1,0 +1,3 @@
+CREATE USER iteruser WITH PASSWORD 'iteruser';
+CREATE DATABASE iterdb;
+GRANT ALL PRIVILEGES ON DATABASE iterdb to iteruser;
