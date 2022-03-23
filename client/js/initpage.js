@@ -63,7 +63,6 @@ function setHeaderDate() {
     })
         .then((res) => res.json())
         .then((res) => {
-            console.log(res.data.date)
             dateField.innerText = res.data.date;
         })
         .catch(error => {

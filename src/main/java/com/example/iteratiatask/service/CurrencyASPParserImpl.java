@@ -20,6 +20,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Document Object Model implementation of bank page parser
+ * Returns parsed values of all Currencies from bank page
+ * Returns parsed value of Currency by its char code
+ * Returns parsed value of bank exchange date
+ * Returns parsed value of ExchangeRate by Currency id
+* */
+
 @Slf4j
 @Service
 public class CurrencyASPParserImpl implements CurrencyASPParser {
@@ -93,7 +101,6 @@ public class CurrencyASPParserImpl implements CurrencyASPParser {
     public ExchangeRate getExchangeRateById(String id) {
         log.info("Getting exchange rate by id {}", id);
         String date = getDate();
-        Map<String, String> map = new HashMap<>();
         // get all 'Valute' nodes..
         NodeList list = document.getElementsByTagName("Valute");
         for (int i = 0; i < list.getLength(); i++) {
@@ -102,13 +109,14 @@ public class CurrencyASPParserImpl implements CurrencyASPParser {
             if (id.equals(idFound)) {
                 NodeList childs = list.item(i).getChildNodes();
                 // store to map
-                map = getNodeValueMap(childs);
+                Map<String, String> map = getNodeValueMap(childs);
+                // construct and return new ExchangeRate
+                return new ExchangeRate(
+                        date, Double.parseDouble(map.get("Value").replace(",", "."))
+                );
             }
         }
-        // construct and return new ExchangeRate
-        return new ExchangeRate(
-                date, Double.parseDouble(map.get("Value").replace(",", "."))
-        );
+        throw new RuntimeException("Unable to find exchange rate by id: " + id);
     }
 
 }

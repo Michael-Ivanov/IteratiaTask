@@ -12,6 +12,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Spring Data JPA implementation of Operation database service
+ */
 @Slf4j
 @Service
 public class OperationDBServiceImpl implements OperationDBService {

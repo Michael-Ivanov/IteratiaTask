@@ -12,6 +12,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Spring Data JPA implementation of Currency database service
+ */
 @Slf4j
 @Service
 public class CurrencyDBServiceImpl implements CurrencyDBService {
