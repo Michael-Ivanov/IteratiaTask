@@ -7,6 +7,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents an entity mapped to table 'currencies'
+ * Also represents a GraphQL type 'Currency'
+ */
+
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor

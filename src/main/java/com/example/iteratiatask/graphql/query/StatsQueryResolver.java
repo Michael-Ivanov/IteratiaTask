@@ -9,6 +9,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Resolves GraphQL qureies for 'Stats' object.
+ * Returns new Stats object for queried pair of char codes
+ */
 @Component
 public class StatsQueryResolver implements GraphQLQueryResolver {
 

@@ -8,6 +8,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+
+/**
+ * Resolves GraphQL queries for 'Operation' object.
+ * Returns list of all Operations stored in database
+ */
 @Component
 public class OperationQueryResolver implements GraphQLQueryResolver {
 

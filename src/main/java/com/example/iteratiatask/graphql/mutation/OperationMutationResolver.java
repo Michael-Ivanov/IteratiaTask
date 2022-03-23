@@ -9,15 +9,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Resolves GraphQL mutations for 'Operation' object.
+ * Creates new Operation object.
+ */
+
 @Slf4j
 @Component
-public class OperationMutation implements GraphQLMutationResolver {
+public class OperationMutationResolver implements GraphQLMutationResolver {
 
     private OperationDBService operationDBService;
     private CurrencyDBService currencyDBService;
 
     @Autowired
-    public OperationMutation(OperationDBService operationDBService, CurrencyDBService currencyDBService) {
+    public OperationMutationResolver(OperationDBService operationDBService, CurrencyDBService currencyDBService) {
         this.operationDBService = operationDBService;
         this.currencyDBService = currencyDBService;
     }

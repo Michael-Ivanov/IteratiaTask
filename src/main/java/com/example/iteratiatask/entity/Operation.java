@@ -8,6 +8,11 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents an entity mapped to table 'operations'
+ * Also represents a GraphQL type 'Operation'
+ */
+
 @Data
 @NoArgsConstructor
 @Entity

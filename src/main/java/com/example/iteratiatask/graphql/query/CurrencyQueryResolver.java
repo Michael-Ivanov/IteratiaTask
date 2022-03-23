@@ -8,6 +8,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Resolves GraphQL queries for 'Currency' objects.
+ * Returning all Currencies from db storage
+ * Returning Currency by its char code
+ */
+
 @Component
 public class CurrencyQueryResolver implements GraphQLQueryResolver {
 

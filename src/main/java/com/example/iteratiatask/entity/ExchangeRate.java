@@ -4,6 +4,10 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * Represents an entity mapped to table 'exchange_rates'
+ */
+
 @Data
 @Entity
 @NoArgsConstructor
